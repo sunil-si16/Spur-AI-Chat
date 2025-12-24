@@ -1,0 +1,18 @@
+{
+  "name": "spur-ai-chat-takehome",
+  "version": "1.0.0",
+  "description": "Full-stack AI chat application",
+  "private": true,
+  "workspaces": [
+    "client",
+    "server"
+  ],
+  "scripts": {
+    "dev:server": "npm run dev -w server",
+    "dev:client": "npm run dev -w client",
+    "start": "echo 'Run separate scripts for now'"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
