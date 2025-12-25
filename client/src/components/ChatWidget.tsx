@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
+/// <reference types="vite/client" />
+import { useState, useEffect, useRef } from 'react';
 
 interface Message {
     role: 'user' | 'assistant';
