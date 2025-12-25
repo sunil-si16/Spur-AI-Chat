@@ -52,10 +52,16 @@ Once the deployment finishes (green "Live" status):
 
 ## Troubleshooting
 
-### "Connection Error" on live site?
--   The frontend needs to know the backend URL.
--   I have configured `render.yaml` to automatically set `VITE_API_URL` for you.
--   If it fails, check the browser console (F12) to see where it's trying to send requests.
+### "Connection Error" / "ERR_NAME_NOT_RESOLVED"?
+This happens if the **Frontend** cannot guess the URL of the **Backend**.
+**Fix:**
+1.  Go to your Render Dashboard -> Click `spur-chat-backend`.
+2.  **Copy** the URL (top left, e.g., `https://spur-chat-backend-xyz.onrender.com`).
+3.  Go back to Dashboard -> Click `spur-chat-client` -> **Environment**.
+4.  Add a new Environment Variable:
+    *   **Key**: `VITE_API_URL`
+    *   **Value**: (Paste the backend URL you just copied)
+5.  Save Changes. Render will redeploy the frontend automatically.
 
 ### Database Reset?
 -   **Warning**: On the free tier, the SQLite database file is **deleted** every time the server restarts (spins down after inactivity).
