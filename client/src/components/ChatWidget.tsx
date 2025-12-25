@@ -20,9 +20,11 @@ export function ChatWidget() {
         scrollToBottom();
     }, [messages]);
 
+    const apiUrl = import.meta.env.VITE_API_URL || '/api';
+
     useEffect(() => {
         if (sessionId) {
-            fetch(`/api/chat/history/${sessionId}`)
+            fetch(`${apiUrl}/chat/history/${sessionId}`)
                 .then(res => res.json())
                 .then(data => {
                     if (data.messages) {
@@ -47,7 +49,7 @@ export function ChatWidget() {
         setMessages(prev => [...prev, { role: 'user', content: userMsg }]);
 
         try {
-            const res = await fetch('/api/chat/message', {
+            const res = await fetch(`${apiUrl}/chat/message`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
