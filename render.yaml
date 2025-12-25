@@ -27,9 +27,3 @@ services:
           type: web
           name: spur-chat-backend
           property: url
-    envVars:
-      - key: VITE_API_URL
-        fromService:
-          type: web
-          name: spur-chat-backend
-          property: url
