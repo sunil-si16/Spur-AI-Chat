@@ -32,9 +32,12 @@ router.post('/message', async (req, res) => {
         await addMessage(session.id, 'ai', replyText);
 
         res.json({ reply: replyText, sessionId: session.id });
-    } catch (error) {
-        console.error('Chat endpoint error:', error);
-        res.status(500).json({ error: 'Internal Server Error' });
+    } catch (error: any) {
+        console.error('Chat endpoint error FULL STACK:', error);
+        res.status(500).json({
+            error: 'Internal Server Error',
+            details: error.message || String(error)
+        });
     }
 });
 

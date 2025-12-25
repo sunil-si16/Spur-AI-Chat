@@ -5,7 +5,7 @@ services:
     env: node
     plan: free
     buildCommand: cd server && npm install && npm run build
-    startCommand: cd server && npm start
+    startCommand: cd server && npx prisma db push && npm start
     envVars:
       - key: DATABASE_URL
         value: file:./dev.db
