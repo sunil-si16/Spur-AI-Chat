@@ -11,10 +11,6 @@ services:
         value: file:./dev.db
       - key: OPENAI_API_KEY
         sync: false # You will enter this in the dashboard
-    disk:
-      name: sqlite-data
-      mountPath: /opt/render/project/src/server/prisma
-      sizeGB: 1
 
   # Frontend Service (React/Vite)
   - type: static
