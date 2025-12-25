@@ -19,9 +19,3 @@ services:
     plan: free
     buildCommand: cd client && npm install && npm run build
     startCommand: cd client && npx serve -s dist -l $PORT
-    envVars:
-      - key: VITE_API_URL
-        fromService:
-          type: web
-          name: spur-chat-backend
-          property: host
