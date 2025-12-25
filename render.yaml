@@ -10,19 +10,23 @@ services:
       - key: DATABASE_URL
         value: file:./dev.db
       - key: OPENAI_API_KEY
-        sync: false # You will enter this in the dashboard
+        sync: false
 
+staticSites:
   # Frontend Service (React/Vite)
-  - type: static
-    name: spur-chat-client
-    env: static
-    plan: free
+  - name: spur-chat-client
     buildCommand: cd client && npm install && npm run build
     publishDir: client/dist
     routes:
       - type: rewrite
         source: /*
         destination: /index.html
+    envVars:
+      - key: VITE_API_URL
+        fromService:
+          type: web
+          name: spur-chat-backend
+          property: url
     envVars:
       - key: VITE_API_URL
         fromService:
