@@ -1,24 +1,63 @@
-# How to Deploy Free (for 2 months+)
+# Deployment Guide (Render.com)
 
-I recommend **Render.com** because it allows you to deploy both the Backend and Frontend for free.
+This guide shows you how to deploy your full-stack application (Frontend + Backend) to Render.com for free.
 
-## Steps to Deploy
+## Why Render?
+- **Free Tier**: Hosting for web services and static sites.
+- **Blueprints**: Deploy both apps from one configuration file (`render.yaml`).
+- **Simplicity**: No need to manage separate Vercel/Heroku accounts.
 
-1.  **Push your latest code** to GitHub (you already did this!).
-2.  **Sign up/Login** to [Render.com](https://render.com).
-3.  Click **New +** -> **Blueprint**.
-4.  Connect your GitHub account and select your repository (`Spur-AI-Chat`).
-5.  Render will automatically detect the `render.yaml` file I just created.
-6.  Click **Apply Blueprint**.
+## Prerequisites
+1.  **GitHub Account**: You must have this code pushed to GitHub (Done).
+2.  **Render Account**: Sign up at [render.com](https://render.com).
 
-## Configuration
-During the setup, Render might ask for environment variables:
--   `OPENAI_API_KEY`: Paste your key (`sk-or-v1-...`).
+---
 
-## Important Note about Database
-This setup uses SQLite. On Render's **Free Tier**, the file system is ephemeral, meaning **chats will reset if the server restarts** (it spins down after 15 mins of inactivity).
--   This is usually fine for a 2-month demo.
--   If you need permanent data, you would need to use a hosted Postgres (like [Neon.tech](https://neon.tech) - accurate free tier) and update the `DATABASE_URL` variable in Render.
+## Step-by-Step Deployment
 
-## Frontend Connection
-I configured the `render.yaml` to automatically set the `VITE_API_URL` for the frontend to talk to the backend. You might need to update your frontend code slightly if you hardcoded `localhost:3001` (I'll check this for you now).
+### 1. Connect to Render
+1.  Log in to your [Render Dashboard](https://dashboard.render.com).
+2.  Click the **"New +"** button in the top right.
+3.  Select **"Blueprint"**.
+
+### 2. Select Your Repository
+1.  Connect your GitHub account if prompted.
+2.  Search for your repository name: `Spur-AI-Chat`.
+3.  Click **"Connect"**.
+
+### 3. Configure the Blueprint
+Render will automatically detect the `render.yaml` file in your repository.
+It will show you two services to be created:
+1.  `spur-chat-backend` (Web Service)
+2.  `spur-chat-client` (Static Site)
+
+**Important**: You will see a section for **Environment Variables**.
+1.  Locate `OPENAI_API_KEY` for the backend service.
+2.  Paste your actual key: `sk-or-v1-...` (the one you gave me).
+    *   *Note: If you don't paste it, the app will run in "Demo Mode" (canned responses).*
+
+### 4. Deploy
+1.  Click **"Apply Blueprint"**.
+2.  Render will start building both services.
+    *   **Backend Build**: installs dependencies, generates database client, compiles TypeScript.
+    *   **Frontend Build**: compiles React/Vite into static HTML/CSS/JS.
+
+### 5. Verify
+Once the deployment finishes (green "Live" status):
+1.  Click on the `spur-chat-client` service.
+2.  Click the URL (e.g., `https://spur-chat-client.onrender.com`).
+3.  Try sending a message!
+
+---
+
+## Troubleshooting
+
+### "Connection Error" on live site?
+-   The frontend needs to know the backend URL.
+-   I have configured `render.yaml` to automatically set `VITE_API_URL` for you.
+-   If it fails, check the browser console (F12) to see where it's trying to send requests.
+
+### Database Reset?
+-   **Warning**: On the free tier, the SQLite database file is **deleted** every time the server restarts (spins down after inactivity).
+-   This means chat history will vanish after ~15 minutes of no use.
+-   **Fix**: For a permanent app, use a managed database like [Neon](https://neon.tech) (Postgres) and change `DATABASE_URL`.
