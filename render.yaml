@@ -12,11 +12,11 @@ services:
       - key: OPENAI_API_KEY
         sync: false
 
-staticSites:
   # Frontend Service (React/Vite)
-  - name: spur-chat-client
+  - type: static_site
+    name: spur-chat-client
     buildCommand: cd client && npm install && npm run build
-    publishDir: client/dist
+    publishPath: client/dist
     routes:
       - type: rewrite
         source: /*
