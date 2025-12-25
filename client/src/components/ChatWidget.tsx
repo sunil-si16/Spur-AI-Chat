@@ -20,7 +20,12 @@ export function ChatWidget() {
         scrollToBottom();
     }, [messages]);
 
-    const apiUrl = import.meta.env.VITE_API_URL || '/api';
+    let apiUrl = import.meta.env.VITE_API_URL;
+    if (!apiUrl) {
+        apiUrl = '/api';
+    } else if (!apiUrl.startsWith('http')) {
+        apiUrl = `https://${apiUrl}`;
+    }
 
     useEffect(() => {
         if (sessionId) {

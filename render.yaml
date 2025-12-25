@@ -24,4 +24,4 @@ services:
         fromService:
           type: web
           name: spur-chat-backend
-          property: url
+          property: host
